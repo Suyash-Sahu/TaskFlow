@@ -1,26 +1,208 @@
 @import "tailwindcss";
 
-:root {
+/* =====================================================
+   LIGHT THEME (DEFAULT)
+===================================================== */
+:root,
+.light {
   --background: #ffffff;
-  --foreground: #171717;
+  --surface: #f8f9fa;
+  --surface-secondary: #f1f3f5;
+  --surface-elevated: #ffffff;
+
+  --border: #e1e4e8;
+  --border-subtle: #f1f3f5;
+
+  --primary: #7e22ce;
+  --primary-hover: #6d21a0;
+  --primary-light: #8b5cf6;
+
+  --primary-gradient: linear-gradient(
+    135deg,
+    #8b5cf6 0%,
+    #ec4899 100%
+  );
+
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a5568;
+  --text-tertiary: #718096;
+  --text-disabled: #a0aec0;
+
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #3b82f6;
+
+  /* Status */
+  --status-todo: #718096;
+  --status-progress: #3b82f6;
+  --status-completed: #22c55e;
+
+  /* Priority */
+  --priority-low: #718096;
+  --priority-medium: #3b82f6;
+  --priority-high: #f59e0b;
+  --priority-urgent: #ef4444;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* =====================================================
+   DARK THEME
+===================================================== */
+.dark {
+  --background: #000000;
+  --surface: #0f0f0f;
+  --surface-secondary: #1a1a1a;
+  --surface-elevated: #1a1a1a;
+
+  --border: #262626;
+  --border-subtle: #1f1f1f;
+
+  --primary: #7e22ce;
+  --primary-hover: #6d21a0;
+  --primary-light: #8b5cf6;
+
+  --primary-gradient: linear-gradient(
+    135deg,
+    #8b5cf6 0%,
+    #ec4899 100%
+  );
+
+  --text-primary: #ffffff;
+  --text-secondary: #a3a3a3;
+  --text-tertiary: #737373;
+  --text-disabled: #525252;
+
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #3b82f6;
+
+  /* Status */
+  --status-todo: #a3a3a3;
+  --status-progress: #38bdf8;
+  --status-completed: #22c55e;
+
+  /* Priority */
+  --priority-low: #a3a3a3;
+  --priority-medium: #60a5fa;
+  --priority-high: #fbbf24;
+  --priority-urgent: #ef4444;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* =====================================================
+   RESET
+===================================================== */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* =====================================================
+   BODY
+===================================================== */
+body {
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* =====================================================
+   GLOBAL PAGE LAYOUT SYSTEM
+===================================================== */
+.page-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem; /* 64px desktop */
+}
+
+.page-section {
+  display: block;
+}
+
+footer {
+  margin-top: auto;
+}
+
+@media (max-width: 640px) {
+  .page-container {
+    gap: 2.5rem; /* 40px mobile */
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* =====================================================
+   TYPOGRAPHY
+===================================================== */
+h1 { font-size: 2rem; font-weight: 700; }
+h2 { font-size: 1.5rem; font-weight: 600; }
+h3 { font-size: 1.25rem; font-weight: 600; }
+h4 { font-size: 1.125rem; font-weight: 600; }
+
+/* =====================================================
+   CARD
+===================================================== */
+.card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary-light);
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.12);
+}
+
+/* =====================================================
+   TRANSITIONS
+===================================================== */
+* {
+  transition-property: color, background-color, border-color, transform, box-shadow;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* =====================================================
+   ACCESSIBILITY
+===================================================== */
+*:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* =====================================================
+   SCROLLBAR
+===================================================== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+/* =====================================================
+   PRINT
+===================================================== */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+
+  .card {
+    box-shadow: none;
+  }
 }
