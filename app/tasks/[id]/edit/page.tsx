@@ -4,8 +4,10 @@ import { use } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
+import { notFound } from 'next/navigation';
 import { useTasks } from '@/hooks/useTasks';
 import { useToast } from '@/components/providers/ToastProvider';
+import { Task } from '@/lib/types';
 import TaskForm from '@/components/tasks/TaskForm';
 import Button from '@/components/ui/Button';
 import { useState } from 'react';
@@ -37,10 +39,19 @@ export default function EditTaskPage({
     );
   }
 
-  const handleSubmit = async (taskData: Parameters<typeof updateTask>[1]) => {
+  const handleSubmit = async (formData: any) => {
     setIsLoading(true);
     try {
-      updateTask(id, taskData);
+      const updates: Partial<Task> = {
+        title: formData.title,
+        description: formData.description,
+        status: formData.status,
+        priority: formData.priority,
+        dueDate: formData.dueDate || undefined,
+        updatedAt: new Date().toISOString()
+      };
+      
+      updateTask(id, updates);
       showToast('Task updated successfully!', 'success');
       router.push(`/tasks/${id}`);
     } catch (error) {
@@ -71,7 +82,13 @@ export default function EditTaskPage({
 
       <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-6">
         <TaskForm
-          task={task}
+          initialData={{
+            title: task.title,
+            description: task.description,
+            status: task.status,
+            priority: task.priority,
+            dueDate: task.dueDate ? new Date(task.dueDate).toISOString().split('T')[0] : undefined
+          }}
           onSubmit={handleSubmit}
           onCancel={handleCancel}
           isLoading={isLoading}

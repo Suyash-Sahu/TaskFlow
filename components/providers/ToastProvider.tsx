@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 import { ToastContainer, ToastProps } from '@/components/ui/Toast';
 
-interface Toast extends ToastProps {
+interface Toast extends Omit<ToastProps, 'onClose'> {
   id: string;
 }
 
@@ -31,7 +31,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <ToastContext.Provider value={{ showToast }}>
       {children}
-      <ToastContainer toasts={toasts} onRemove={removeToast} />
+      <ToastContainer toasts={toasts as any} onRemove={removeToast} />
     </ToastContext.Provider>
   );
 }
